@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Added command line interface (bin/cli)
+
+### Changed
+
+- scripts in script/ have been replaced by a command in the new CLI
+
+### Dependencies
+
+- Added arg 4.1.2
+- Updated mongoose to 5.8.6
+
 ## [2.1.0] - 2020-01-02
 
 ### Added

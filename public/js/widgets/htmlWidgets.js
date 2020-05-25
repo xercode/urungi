@@ -8,22 +8,22 @@ angular.module('app').service('htmlWidgets', function (gettextCatalog) {
 
     this.get4colsctaHTML = function () {
         return '<div page-block class="container-fluid ndContainer" ndType="container">' +
-                    '<div  page-block class="col-md-3 ndContainer" ndtype="column" >' +
+                    '<div page-block class="col-md-3 ndContainer" ndtype="column" >' +
                         '<h3  page-block class="editable" ndType="header" >  ' + gettextCatalog.getString('A header text H3') + ' </h3>' +
                         '<p page-block class="editable" ndType="paragraph">' + gettextCatalog.getString('This is a simple text paragraph select to edit content.') + '</p>' +
                         '<div page-block class="Block500" ndtype="column"></div>' +
                     '</div>' +
-                    '<div class="col-md-3 ndContainer" ndtype="column">' +
+                    '<div page-block class="col-md-3 ndContainer" ndtype="column">' +
                         '<h3 page-block  class="editable"  ndType="header" >  ' + gettextCatalog.getString('A header text H3') + ' </h3>' +
                         '<p page-block  class="editable" ndType="paragraph">' + gettextCatalog.getString('This is a simple text paragraph select to edit content.') + '</p>' +
                         '<div page-block class="Block500" ndtype="column"></div>' +
                     '</div>' +
-                    '<div class="col-md-3 ndContainer" ndtype="column" >' +
+                    '<div page-block class="col-md-3 ndContainer" ndtype="column" >' +
                         '<h3  page-block  class="editable" ndType="header" >  ' + gettextCatalog.getString('A header text H3') + ' </h3>' +
                         '<p page-block  class="editable"  ndType="paragraph">' + gettextCatalog.getString('This is a simple text paragraph select to edit content.') + '</p>' +
                         '<div page-block class="Block500" ndtype="column"></div>' +
                     '</div>' +
-                    '<div class="col-md-3 ndContainer" ndtype="column">' +
+                    '<div page-block class="col-md-3 ndContainer" ndtype="column">' +
                         '<h3  page-block  class="editable" ndType="header" >  ' + gettextCatalog.getString('A header text H3') + ' </h3>' +
                         '<p page-block  class="editable"  ndType="paragraph">' + gettextCatalog.getString('This is a simple text paragraph select to edit content.') + '</p>' +
                         '<div page-block class="Block500" ndtype="column"></div>' +
@@ -33,17 +33,17 @@ angular.module('app').service('htmlWidgets', function (gettextCatalog) {
 
     this.get3colsctaHTML = function () {
         return '<div page-block class="container-fluid ndContainer" ndType="container">' +
-                    '<div  page-block class="col-md-4 ndContainer" ndtype="column" >' +
+                    '<div page-block class="col-md-4 ndContainer" ndtype="column" >' +
                         '<h3  page-block class="editable" ndType="header" >  ' + gettextCatalog.getString('A header text H3') + ' </h3>' +
                         '<p page-block class="editable" ndType="paragraph">' + gettextCatalog.getString('This is a simple text paragraph select to edit content.') + '</p>' +
                         '<div page-block class="Block500" ndtype="column"></div>' +
                     '</div>' +
-                    '<div class="col-md-4 ndContainer" ndtype="column">' +
+                    '<div page-block class="col-md-4 ndContainer" ndtype="column">' +
                         '<h3 page-block  class="editable"  ndType="header" >  ' + gettextCatalog.getString('A header text H3') + ' </h3>' +
                         '<p page-block  class="editable" ndType="paragraph">' + gettextCatalog.getString('This is a simple text paragraph select to edit content.') + '</p>' +
                         '<div page-block class="Block500" ndtype="column"></div>' +
                     '</div>' +
-                    '<div class="col-md-4 ndContainer" ndtype="column">' +
+                    '<div page-block class="col-md-4 ndContainer" ndtype="column">' +
                         '<h3  page-block  class="editable" ndType="header" >  ' + gettextCatalog.getString('A header text H3') + ' </h3>' +
                         '<p page-block  class="editable"  ndType="paragraph">' + gettextCatalog.getString('This is a simple text paragraph select to edit content.') + '</p>' +
                         '<div page-block class="Block500" ndtype="column"></div>' +
@@ -53,12 +53,12 @@ angular.module('app').service('htmlWidgets', function (gettextCatalog) {
 
     this.get2colsctaHTML = function () {
         return '<div page-block class="container-fluid ndContainer" ndType="container">' +
-                    '<div  page-block class="col-md-6 ndContainer" ndtype="column" >' +
+                    '<div page-block class="col-md-6 ndContainer" ndtype="column" >' +
                         '<h3  page-block class="editable" ndType="header" >  ' + gettextCatalog.getString('A header text H3') + ' </h3>' +
                         '<p page-block class="editable" ndType="paragraph">' + gettextCatalog.getString('This is a simple text paragraph select to edit content.') + '</p>' +
                         '<div page-block class="Block500" ndtype="column"></div>' +
                     '</div>' +
-                    '<div class="col-md-6 ndContainer" ndtype="column">' +
+                    '<div page-block class="col-md-6 ndContainer" ndtype="column">' +
                         '<h3 page-block  class="editable"  ndType="header" >  ' + gettextCatalog.getString('A header text H3') + ' </h3>' +
                         '<p page-block  class="editable" ndType="paragraph">' + gettextCatalog.getString('This is a simple text paragraph select to edit content.') + '</p>' +
                         '<div page-block class="Block500" ndtype="column"></div>' +

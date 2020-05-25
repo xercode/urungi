@@ -144,7 +144,7 @@ angular.module('app').service('reportModel', function ($q, api, connection, uuid
         var containerID = 'REPORT_CONTAINER_' + reportID;
 
         var html = '<div page-block class="container-fluid featurette ndContainer" ndType="container" style="height:100%;padding:0px;">' +
-                        '<div class="col-md-12 ndContainer" style="height:100%;padding:0px;">' +
+                        '<div class="col-md-12 ndContainer" style="padding:0px;">' +
                             '<div class="container-fluid" id="' + containerID +
                              '" report-view report="getReport(\'' + reportID + '\')" style="padding:0px;position: relative;height: 100%;"></div>' +
                         '</div>' +

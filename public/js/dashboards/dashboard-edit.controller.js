@@ -118,6 +118,7 @@
             }
 
             if ($scope.mode === 'add') {
+                $scope.selectedDashboardLimit = { value: 500 };
                 $scope.dashboardID = uuid.v4();
                 $scope.selectedDashboard = {
                     dashboardName: gettextCatalog.getString('New Dashboard'),

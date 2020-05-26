@@ -1,6 +1,8 @@
 const config = require('config');
 const debug = require('debug')('urungi:server');
 const mongoose = require('mongoose');
+const mongooseHelper = require('../helpers/mongoose.js');
+const jwt = require('jsonwebtoken');
 const Log = mongoose.model('Log');
 const Company = mongoose.model('Company');
 const User = mongoose.model('User');
@@ -21,19 +23,74 @@ module.exports = function (app, passport) {
         }
     );
 
+    app.post('/auth/jwt/login', function (req, res, next) {
+        const token = req.headers['access-token'];
+
+        if (token) {
+            jwt.verify(token, config.get('session.secret'), (err, decoded) => {
+                console.log(decoded);
+                if (err) {
+                    res.status(401).json({
+                        response: false,
+                        message: 'Invalid token'
+                    });
+                } else {
+                    User.findOne({ userName: decoded.user }, function (err, user) {
+                        if (err) {
+                            res.status(200).json({
+                                response: false,
+                                message: err
+                            });
+                        }
+                        if (user) {
+                            req.logIn(user, function (err) {
+                                if (err) { return next(err); }
+                                res.json({ user: user.toObject() });
+
+                                if (global.logSuccessLogin) {
+                                    Log.saveToLog(req, { text: 'User login: ' + user.userName + ' (' + user.email + ')', code: 102 });
+                                }
+                            });
+                        } else {
+                            res.status(401).json({
+                                response: false,
+                                message: 'Invalid login'
+                            });
+                        }
+                    });
+                }
+            });
+        } else {
+            res.status(400).json({
+                response: false,
+                message: 'Token not provided'
+            });
+        }
+    });
+
+    app.get('/api/user/roles', function (req, res, next) {
+        const pipeline = mongooseHelper.getAggregationPipelineFromQuery(req.query);
+        Role.aggregate(pipeline).then(([result]) => {
+            res.json(result);
+        }).catch(next);
+    });
+
     app.post('/api/user/manager', function (req, res, next) {
         if (!req.body.username) {
-            res.status(400).send('Param username is not defined');
+            res.status(400).send('param username is not defined');
         } else if (!req.body.hash) {
-            res.status(400).send('Param hash is not defined');
+            res.status(400).send('param hash is not defined');
         } else if (!req.body.roles) {
-            res.status(400).send('Param roles is not defined');
+            res.status(400).send('param roles is not defined');
         } else {
             // find a user in Mongo with provided username
             User.findOne({ userName: req.body.username }, function (err, user) {
                 // In case of any error return
                 if (err) {
-                    res.status(500).send('Error creating the user: ' + err);
+                    res.status(200).json({
+                        response: false,
+                        message: err
+                    });
                 }
                 // already exists
                 if (user) {
@@ -44,7 +101,18 @@ module.exports = function (app, passport) {
                         if (err) {
                             return next(err);
                         }
-                        res.status(200).send('User updated succesful');
+                        const payload = {
+                            check: true,
+                            user: user.userName
+                        };
+                        const token = jwt.sign(payload, config.get('session.secret'), {
+                            expiresIn: 1440
+                        });
+                        res.status(200).json({
+                            response: true,
+                            message: 'user successfully updated',
+                            token: token
+                        });
                     });
                 } else {
                     var newUser = new User();
@@ -62,7 +130,18 @@ module.exports = function (app, passport) {
                         if (err) {
                             return next(err);
                         }
-                        res.status(201).send('User creation succesful');
+                        const payload = {
+                            check: true,
+                            user: newUser.userName
+                        };
+                        const token = jwt.sign(payload, config.get('session.secret'), {
+                            expiresIn: 1440
+                        });
+                        res.status(201).json({
+                            response: true,
+                            message: 'user successfully created',
+                            token: token
+                        });
                     });
                 }
             });

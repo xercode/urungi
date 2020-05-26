@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const Log = mongoose.model('Log');
 const Company = mongoose.model('Company');
 const User = mongoose.model('User');
+const Role = mongoose.model('Role');
 
 module.exports = function (app, passport) {
     app.get('/login', function (req, res, next) {
@@ -19,6 +20,54 @@ module.exports = function (app, passport) {
             res.redirect('/');
         }
     );
+
+    app.post('/api/user/manager', function (req, res, next) {
+        if (!req.body.username) {
+            res.status(400).send('Param username is not defined');
+        } else if (!req.body.hash) {
+            res.status(400).send('Param hash is not defined');
+        } else if (!req.body.roles) {
+            res.status(400).send('Param roles is not defined');
+        } else {
+            // find a user in Mongo with provided username
+            User.findOne({ userName: req.body.username }, function (err, user) {
+                // In case of any error return
+                if (err) {
+                    res.status(500).send('Error creating the user: ' + err);
+                }
+                // already exists
+                if (user) {
+                    const roles = req.body.roles.split(',');
+                    user.roles = [];
+                    user.roles = roles;
+                    user.save(function (err) {
+                        if (err) {
+                            return next(err);
+                        }
+                        res.status(200).send('User updated succesful');
+                    });
+                } else {
+                    var newUser = new User();
+                    // set the user's local credentials
+                    newUser.userName = req.body.username;
+                    newUser.hash = req.body.hash;
+                    newUser.companyID = 'COMPID';
+                    const roles = req.body.roles.split(',');
+                    newUser.roles = [];
+                    newUser.roles = roles;
+                    newUser.status = 'active';
+
+                    // save the user
+                    newUser.save(function (err) {
+                        if (err) {
+                            return next(err);
+                        }
+                        res.status(201).send('User creation succesful');
+                    });
+                }
+            });
+        }
+    });
 
     app.post('/api/login', function (req, res, next) {
         User.countDocuments({}, function (err, c) {

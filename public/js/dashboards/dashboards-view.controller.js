@@ -73,6 +73,9 @@
                 if (mandatoryCount === 0) {
                     repaintReports();
                 }
+                $('.filter-run').hide();
+                $('.filter-run').last().show();
+
             }, 0);
         }
 

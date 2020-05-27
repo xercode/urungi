@@ -14,6 +14,7 @@ const csurf = require('csurf');
 const restrict = require('./middlewares/restrict.js');
 
 var app = express();
+var csurflaunch = csurf();
 
 // set the view engine to ejs
 app.set('view engine', 'ejs');
@@ -50,7 +51,15 @@ app.use(function (req, res, next) {
     next();
 });
 
-app.use(csurf());
+const csurfProtection = function (req, res, next) {
+    if (csrfNeeded(req, res, next)) {
+        csurflaunch(req, res, next);
+    } else {
+        next();
+    }
+}
+
+app.use(csurfProtection);
 
 var bodyParser = require('body-parser');
 app.use(bodyParser.json({ limit: '50mb' })); // get information from html forms
@@ -88,3 +97,11 @@ app.get('*', function (req, res) {
 });
 
 module.exports = app;
+
+function csrfNeeded (req) {
+    const unprotected = ['/api/user/manager', '/auth/jwt/login', '/api/user/roles'];
+    if (unprotected.includes(req.url)) {
+        return false;
+    }
+    return true;
+}

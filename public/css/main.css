@@ -3238,3 +3238,16 @@ a.list-group-item:hover {
     border-color: #999;
     color: white;
 }
+
+.required {
+    color: red;
+    font-style: italic;
+}
+
+.filter-run button, .filter-run button:hover, .filter-run button:visited, .filter-run button:active {
+    width: 100px;
+    background-color: black;
+    color: white;
+    font-size: 1.5em;
+    text-transform: uppercase;
+}

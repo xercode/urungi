@@ -95,6 +95,10 @@
             </span>
         </span>
 
+        <span ng-if="(vm.filter.promptMandatory)" class="required">
+            Mandatory filter
+        </span>
+
         <span page-block class="filter-run">
             <button type="button" class="btn btn-sm" ng-if="vm.isPrompt" ng-click="vm.inputChanged(vm.filter)" translate>Run</button>
         </span>

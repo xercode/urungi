@@ -37,6 +37,8 @@
 
             $timeout(function () {
                 $scope.$broadcast('repaint', { fetchData: (vm.mandatoryPrompts)?false:true });
+                $('.filter-run').hide();
+                $('.filter-run').last().show();
             }, 0);
         }
 

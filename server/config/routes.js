@@ -23,8 +23,8 @@ module.exports = function (app, passport) {
         }
     );
 
-    app.post('/auth/jwt/login', function (req, res, next) {
-        const token = req.headers['access-token'];
+    app.get('/auth/jwt/login', function (req, res, next) {
+        const token = req.query.token;
 
         if (token) {
             jwt.verify(token, config.get('session.secret'), (err, decoded) => {
@@ -45,7 +45,7 @@ module.exports = function (app, passport) {
                         if (user) {
                             req.logIn(user, function (err) {
                                 if (err) { return next(err); }
-                                res.json({ user: user.toObject() });
+                                res.redirect('/');
 
                                 if (global.logSuccessLogin) {
                                     Log.saveToLog(req, { text: 'User login: ' + user.userName + ' (' + user.email + ')', code: 102 });

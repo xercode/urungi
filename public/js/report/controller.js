@@ -20,7 +20,7 @@ angular.module('app').controller('reportCtrl', function ($scope, connection, $co
     $scope.mode = 'preview';
     $scope.isForDash = false;
 
-    $scope.selectedRecordLimit = { value: 500 };
+    $scope.selectedRecordLimit = { value: $scope.rows.length };
 
     $scope.rootItem = {};
 
@@ -272,6 +272,7 @@ angular.module('app').controller('reportCtrl', function ($scope, connection, $co
 
             $scope.sql = result.sql;
             $scope.time = result.time;
+            $scope.dataLength = result.data.length;
             $scope.selectedRecordLimit.value =  result.data.length;
             $scope.$broadcast('repaint', { fetchData: false, data: result.data });
         });

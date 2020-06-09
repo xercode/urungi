@@ -12,7 +12,19 @@
             controllerAs: 'vm',
             resolve: {
                 report: function ($route, reportModel) {
-                    return reportModel.getReportDefinition($route.current.params.reportID, false);
+                    return reportModel.getReportDefinition($route.current.params.reportID, false, undefined);
+                },
+            },
+            isPublic: true,
+        });
+
+        $routeProvider.when('/reports/view/:reportID/:urlParams', {
+            templateUrl: 'partials/reports/view.html',
+            controller: 'ReportsViewController',
+            controllerAs: 'vm',
+            resolve: {
+                report: function ($route, reportModel) {
+                    return reportModel.getReportDefinition($route.current.params.reportID, false, $route.current.params.urlParams);
                 },
             },
             isPublic: true,

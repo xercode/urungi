@@ -45,6 +45,7 @@ reportFilterSchema.add({
     promptInstructions: String,
     promptMandatory: Boolean,
     promptTitle: String,
+    promptUrl: Boolean,
 });
 
 const ReportPropertiesSchema = new mongoose.Schema({

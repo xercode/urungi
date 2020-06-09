@@ -1,9 +1,29 @@
 angular.module('app').service('reportModel', function ($q, api, connection, uuid, FileSaver, Noty, reportsService) {
-    this.getReportDefinition = function (id, isLinked) {
+    this.getReportDefinition = function (id, isLinked, urlParams) {
         const url = '/api/reports/get-report/' + id;
-        const params = { id: id, mode: 'preview', linked: isLinked };
+        const params = { id: id, mode: 'preview', linked: isLinked, urlParams: urlParams };
+
+        //We build a key value array with the urlParams
+        urlParams = params.urlParams;
+        urlFilters = {};
+        if(urlParams) {
+            array = urlParams.split('&');
+            array.forEach(function (entry) {
+                array2 = entry.split('=');
+                key = array2[0];
+                value = array2[1];
+                urlFilters[key] = value;
+            })
+        }
 
         return connection.get(url, params).then(function (data) {
+            filters = data.item.properties.filters;
+            filters.forEach(function(entry) {
+                if(urlFilters[entry.elementName]){
+                    entry.criterion.text1 = urlFilters[entry.elementName];
+                }
+            });
+
             return data.item;
         });
     };

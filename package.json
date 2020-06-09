@@ -59,6 +59,7 @@
     "password-generator": "^2.2.0",
     "pg": "^7.12.1",
     "pivottable": "^2.23.0",
+    "pm2": "^4.4.0",
     "request": "^2.88.0",
     "subtotal": "^1.11.0-alpha.0",
     "ui-select": "^0.19.8"
@@ -84,13 +85,17 @@
     "merge-stream": "^2.0.0",
     "mongodb-memory-server": "^6.2.3",
     "npm-run-all": "^4.1.5",
+    "npx": "^10.2.2",
     "set-cookie-parser": "^2.4.1",
     "stylelint": "^13.0.0",
     "stylelint-config-standard": "^19.0.0",
-    "supertest": "^4.0.2"
+    "supertest": "^4.0.2",
+    "supervisor": "^0.12.0"
   },
   "scripts": {
-    "start": "node server.js",
+    "server": "node server.js",
+    "prod": "./node_modules/.bin/pm2 start server.js",
+    "dev": "./node_modules/.bin/npx supervisor server.js",
     "test": "jest",
     "posttest": "run-s -s -c lint:*",
     "lint:js": "eslint .",

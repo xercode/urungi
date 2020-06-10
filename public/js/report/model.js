@@ -19,7 +19,7 @@ angular.module('app').service('reportModel', function ($q, api, connection, uuid
         return connection.get(url, params).then(function (data) {
             filters = data.item.properties.filters;
             filters.forEach(function(entry) {
-                if(urlFilters[entry.elementName]){
+                if(urlFilters[entry.elementName] && entry.promptUrl){
                     entry.criterion.text1 = urlFilters[entry.elementName];
                 }
             });

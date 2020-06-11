@@ -43,7 +43,7 @@
     <div class="row">
         <div class="col-sm-12">
             <div report-view report="vm.report" mode="'preview'"></div>
-            <div  ng-if="vm.showPagination">
+            <div  ng-if="undefined !== vm.showPagination && true == vm.showPagination ">
                 <app-pager current-page="vm.currentPage" total-pages="vm.pages" on-page-change="vm.goToPage(page)"></app-pager>
             </div>
         </div>

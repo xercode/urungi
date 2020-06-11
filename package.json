@@ -94,8 +94,9 @@
   },
   "scripts": {
     "server": "node server.js",
-    "prod": "./node_modules/.bin/pm2 start server.js",
-    "dev": "./node_modules/.bin/npx supervisor server.js",
+    "server-prod": "./node_modules/.bin/pm2 start server.js",
+    "server-dev": "./node_modules/.bin/npx supervisor server.js",
+    "watch": "./node_modules/.bin/gulp watch",
     "test": "jest",
     "posttest": "run-s -s -c lint:*",
     "lint:js": "eslint .",

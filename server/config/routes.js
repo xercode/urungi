@@ -94,6 +94,11 @@ module.exports = function (app, passport) {
                 }
                 // already exists
                 if (user) {
+                    user.userName = req.body.username;
+                    user.firstName = req.body.firstName;
+                    user.lastName = req.body.lastName;
+                    user.email = req.body.email;
+                    user.unit = req.body.unit;
                     const roles = req.body.roles.split(',');
                     user.roles = [];
                     user.roles = roles;
@@ -118,6 +123,10 @@ module.exports = function (app, passport) {
                     var newUser = new User();
                     // set the user's local credentials
                     newUser.userName = req.body.username;
+                    newUser.firstName = req.body.firstName;
+                    newUser.lastName = req.body.lastName;
+                    newUser.email = req.body.email;
+                    newUser.unit = req.body.unit;
                     newUser.hash = req.body.hash;
                     newUser.companyID = 'COMPID';
                     const roles = req.body.roles.split(',');

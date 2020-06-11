@@ -1,9 +1,8 @@
-<script src="js/xlsx.core.min.js"></script>
 <app-theme-link theme="vm.report.theme"></app-theme-link>
 
 <div class="container-fluid">
     <div class="page-header">
-        <span class="h3" ng-bind="vm.report.reportName"></span>
+        <span class="h3" >{{vm.report.reportName}} &ensp; <span class="badge" ng-bind="vm.numberOfRows"></span></span>
 
         <div class="pull-right">
             <div class="btn-group">
@@ -11,13 +10,16 @@
                     <span translate>Export</span> <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu">
-                    <li ng-class="{ disabled: !vm.exportAsPNGAvailable }">
-                        <a href="" ng-click="vm.exportAsPNGAvailable && vm.downloadAsPNG()">As PNG</a>
-                    </li>
-                    <li ng-class="{ disabled: !vm.exportAsPDFAvailable }">
-                        <a href="" ng-click="vm.exportAsPDFAvailable && vm.downloadAsPDF()">As PDF</a>
-                    </li>
-                    <li ng-if="vm.report.reportType === 'grid'"><a href="" ng-click="vm.saveAsXLSX()" translate>As XLSX</a></li>
+                    <div  ng-if="vm.report.reportType != 'grid'">
+                        <li ng-class="{ disabled: !vm.exportAsPNGAvailable }">
+                            <a href="" ng-click="vm.exportAsPNGAvailable && vm.downloadAsPNG()">As PNG</a>
+                        </li>
+                        <li ng-class="{ disabled: !vm.exportAsPDFAvailable }">
+                            <a href="" ng-click="vm.exportAsPDFAvailable && vm.downloadAsPDF()">As PDF</a>
+                        </li>
+                    </div>
+
+                    <li ng-if="vm.report.reportType == 'grid'"><a href="" ng-click="vm.saveAsXLSX()" translate>As XLSX</a></li>
                 </ul>
             </div>
 
@@ -41,6 +43,9 @@
     <div class="row">
         <div class="col-sm-12">
             <div report-view report="vm.report" mode="'preview'"></div>
+            <div  ng-if="vm.showPagination">
+                <app-pager current-page="vm.currentPage" total-pages="vm.pages" on-page-change="vm.goToPage(page)"></app-pager>
+            </div>
         </div>
     </div>
 </div>

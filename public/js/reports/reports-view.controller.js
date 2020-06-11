@@ -19,6 +19,12 @@
         vm.saveAsXLSX = saveAsXLSX;
         vm.isAdmin = false;
         vm.mandatoryPrompts = false;
+        vm.numberOfRows = 0;
+        vm.showPagination = false;
+        vm.numPerPage = 15;
+        vm.currentPage = 1;
+        vm.pages = 15;
+        vm.goToPage = goToPage;
 
         activate();
 
@@ -26,22 +32,27 @@
             userService.getCurrentUser().then(user => {
                 vm.isAdmin = user.isAdmin();
             }, () => {});
-            api.isReportAsPNGAvailable(report._id).then(available => {
-                vm.exportAsPNGAvailable = available;
-            });
-            api.isReportAsPDFAvailable(report._id).then(available => {
-                vm.exportAsPDFAvailable = available;
-            });
+
+            if( undefined !== vm.report.reportType && vm.report.reportType !== 'grid') {
+                api.isReportAsPNGAvailable(report._id).then(available => {
+                    vm.exportAsPNGAvailable = available;
+                });
+                api.isReportAsPDFAvailable(report._id).then(available => {
+                    vm.exportAsPDFAvailable = available;
+                });
+            }
 
             vm.prompts = initPrompts();
+            refresh();
+        }
 
+        function refresh () {
             $timeout(function () {
                 $scope.$broadcast('repaint', { fetchData: (vm.mandatoryPrompts)?false:true });
                 $('.filter-run').hide();
                 $('.filter-run').last().show();
             }, 0);
         }
-
         function initPrompts () {
             const prompts = {};
             for (const filter of vm.report.properties.filters) {
@@ -110,6 +121,11 @@
             a.download = filename;
             a.href = 'data:' + type + ';base64,' + data;
             a.dispatchEvent(new MouseEvent('click'));
+        }
+
+        function goToPage (page) {
+            vm.currentPage = page;
+            refresh();
         }
     }
 })();

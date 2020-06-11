@@ -29,7 +29,7 @@ angular.module('app').directive('reportView', function ($q, $timeout, reportMode
 
             $scope.$on('repaint', function (event, args) {
                 $scope.loading = true;
-
+                $scope.$parent.vm.showPagination = false;
                 if (!args) {
                     args = {};
                 }
@@ -49,13 +49,25 @@ angular.module('app').directive('reportView', function ($q, $timeout, reportMode
                     $scope.loadingMessage = gettextCatalog.getString('Repainting report ...');
 
                     if ($scope.data && $scope.data.length > 0) {
+                        if('grid' == $scope.report.reportType || 'vertical-grid' == $scope.report.reportType) {
+                            $scope.$parent.vm.showPagination = true;
+                            $scope.changeContent('');
+                            let numberOfRows = $scope.data.length;
+                            let currentPage  = $scope.$parent.vm.currentPage
+                            let numPerPage   = $scope.$parent.vm.numPerPage;
+                            let begin = ((currentPage - 1) * numPerPage);
+                            let end = begin + numPerPage;
+                            $scope.data = $scope.data.slice(begin, end);
+                            $scope.$parent.vm.numberOfRows = numberOfRows;
+                            $scope.$parent.vm.pages = Number(numberOfRows/numPerPage);
+
+                        }
+
+
                         switch ($scope.report.reportType) {
                         case 'grid':
-                            $scope.changeContent('');
                             return grid.createGrid(element.find('.report-view'), $scope.report, $scope.data);
-
                         case 'vertical-grid':
-                            $scope.changeContent('');
                             return grid.createGrid(element.find('.report-view'), $scope.report, $scope.data, { vertical: true });
 
                         case 'pivot':

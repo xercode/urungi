@@ -29,7 +29,10 @@ angular.module('app').directive('reportView', function ($q, $timeout, reportMode
 
             $scope.$on('repaint', function (event, args) {
                 $scope.loading = true;
-                $scope.$parent.vm.showPagination = false;
+                if( 'preview' == $scope.mode) {
+                    $scope.$parent.vm.showPagination = false;
+                }
+
                 if (!args) {
                     args = {};
                 }
@@ -47,11 +50,10 @@ angular.module('app').directive('reportView', function ($q, $timeout, reportMode
 
                 return promise.then(function () {
                     $scope.loadingMessage = gettextCatalog.getString('Repainting report ...');
-
+                    console.log('Repainting report ...', $scope);
                     if ($scope.data && $scope.data.length > 0) {
-                        if('grid' == $scope.report.reportType || 'vertical-grid' == $scope.report.reportType) {
+                        if( 'preview' == $scope.mode && 'grid' == $scope.report.reportType || 'vertical-grid' == $scope.report.reportType) {
                             $scope.$parent.vm.showPagination = true;
-                            $scope.changeContent('');
                             let numberOfRows = $scope.data.length;
                             let currentPage  = $scope.$parent.vm.currentPage
                             let numPerPage   = $scope.$parent.vm.numPerPage;
@@ -66,8 +68,11 @@ angular.module('app').directive('reportView', function ($q, $timeout, reportMode
 
                         switch ($scope.report.reportType) {
                         case 'grid':
+                            $scope.changeContent('');
                             return grid.createGrid(element.find('.report-view'), $scope.report, $scope.data);
+
                         case 'vertical-grid':
+                            $scope.changeContent('');
                             return grid.createGrid(element.find('.report-view'), $scope.report, $scope.data, { vertical: true });
 
                         case 'pivot':

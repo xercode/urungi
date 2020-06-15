@@ -65,10 +65,20 @@
             params.sortType = vm.sortDir[params.sort];
             params.page = vm.page;
 
-            return api.getDashboards(params).then(result => {
-                vm.dashboards = result.items;
-                vm.currentPage = result.page;
-                vm.pages = result.pages;
+            /* We only want the dashboards of the current user */
+            let user = userService.getCurrentUser();
+            let userName;
+
+            user.then(function(data) {
+                userName = data.userName;
+                params.filters.author = userName;
+
+                return api.getDashboards(params).then(result => {
+                    vm.dashboards = result.items;
+                    vm.currentPage = result.page;
+                    vm.pages = result.pages;
+                });
+
             });
         }
 

@@ -11,9 +11,9 @@
         templateUrl: 'partials/reports/reports-table.component.html',
     });
 
-    ReportsTableController.$inject = ['api'];
+    ReportsTableController.$inject = ['api', 'userService'];
 
-    function ReportsTableController (api) {
+    function ReportsTableController (api, userService) {
         const vm = this;
 
         vm.currentPage = 1;
@@ -63,10 +63,20 @@
             params.page = vm.page;
             params.populate = 'layer';
 
-            return api.getReports(params).then(result => {
-                vm.reports = result.items;
-                vm.currentPage = result.page;
-                vm.pages = result.pages;
+            /* We only want the reports of the current user */
+            let user = userService.getCurrentUser();
+            let userName;
+
+            user.then(function(data) {
+                userName = data.userName;
+                params.filters.author = userName;
+
+                return api.getReports(params).then(result => {
+                    vm.reports = result.items;
+                    vm.currentPage = result.page;
+                    vm.pages = result.pages;
+                });
+
             });
         }
 

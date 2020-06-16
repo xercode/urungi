@@ -1,4 +1,6 @@
-angular.module('app').controller('homeCtrl', ['$scope', '$rootScope', '$q', 'moment', 'connection', 'gettextCatalog', 'userService', 'api', function ($scope, $rootScope, $q, moment, connection, gettextCatalog, userService, api) {
+angular.module('app').controller('homeCtrl',
+    ['$scope', '$rootScope', '$q', 'moment', 'connection', 'gettextCatalog', 'userService', 'api', '$uibModal','reportModel',
+        function ($scope, $rootScope, $q, moment, connection, gettextCatalog, userService, api,$uibModal,reportModel) {
     $scope.dashboardsNbr = 3;
     $scope.reportsNbr = 10;
     $scope.notificationsNbr = 0;
@@ -195,6 +197,54 @@ angular.module('app').controller('homeCtrl', ['$scope', '$rootScope', '$q', 'mom
                     });
                 }
             }
+        });
+    }
+
+    $scope.openDuplicateReportModal = function (id, title) {
+        const modal = $uibModal.open({
+            component: 'appDuplicateModal',
+            resolve: {
+                name: () => title,
+                duplicate: () => function (newName) {
+                    const params = {
+                        report: { _id: id },
+                        newName: newName,
+                    };
+
+                    return reportModel.duplicateReport(params);
+                },
+            },
+        });
+
+        return modal;
+    };
+
+    $scope.openDuplicateDashboardModal = function (id, title) {
+        const modal = $uibModal.open({
+            component: 'appDuplicateModal',
+            resolve: {
+                name: () => title,
+                duplicate: () => function (newName) {
+                    const params = {
+                        dashboard: { _id: id },
+                        newName: newName,
+                    };
+
+                    return duplicateDashboard(params);
+                },
+            },
+        });
+
+        return modal;
+    };
+
+    function duplicateDashboard (duplicateOptions) {
+        return api.getDashboard(duplicateOptions.dashboard._id).then(function (dashboard) {
+            delete dashboard._id;
+            delete dashboard.createdOn;
+            dashboard.dashboardName = duplicateOptions.newName;
+
+            return api.createDashboard(dashboard);
         });
     }
 

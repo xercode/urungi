@@ -88,10 +88,16 @@
 
     <div data-nodrag class="tree-node tree-node-item" ng-if="node.nodeType == 'report'">
         <i class="fa fa-bar-chart"></i><a data-nodrag  href="reports/view/{{node.id}}">{{node.title}}</a>
+        <button class="btn" ng-click="openDuplicateReportModal(node.id,node.title)" uib-tooltip="{{ 'Duplicate this report' | translate}}" tooltip-placement="bottom">
+            <i class="fa fa-copy"></i>
+        </button>
     </div>
 
     <div data-nodrag class="tree-node tree-node-item" ng-if="node.nodeType == 'dashboard'">
         <i class="fa fa-dashboard"></i><a data-nodrag  href="dashboards/view/{{node.id}}">{{node.title}}</a>
+        <button class="btn" ng-click="openDuplicateDashboardModal(node.id,node.title)" uib-tooltip="{{ 'Duplicate this dashboard' | translate}}" tooltip-placement="bottom">
+            <i class="fa fa-copy"></i>
+        </button>
     </div>
 
     <ol ng-if="node.nodes" data-nodrag ui-tree-nodes="" data-nodrop-enabled ng-model="node.nodes" ng-class="{hidden: collapsed}">

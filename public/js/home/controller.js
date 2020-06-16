@@ -267,6 +267,10 @@ angular.module('app').controller('homeCtrl',
             $scope.userObjects = data.items;
         });
 
+        userService.getCurrentUser().then(data => {
+            $scope.user = data;
+        });
+
         getIntraOptions();
     };
     $scope.refreshHome();

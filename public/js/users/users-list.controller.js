@@ -40,7 +40,7 @@
         function getUsers (page) {
             var params = {
                 page: page || 1,
-                fields: 'userName,lastName,status',
+                fields: 'userName,firstName,lastName,status',
             };
 
             api.getUsers(params).then(function (res) {

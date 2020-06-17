@@ -77,6 +77,7 @@
         }
 
         function repaintWithPrompts () {
+            vm.currentPage = 1;
             const filterCriteria = {};
             for (const i in vm.prompts) {
                 filterCriteria[i] = vm.prompts[i].criterion;

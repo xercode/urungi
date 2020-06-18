@@ -30,6 +30,29 @@
 </div>
 
 <div class="container-fluid">
+
+    <div class="row margin-bottom-10" ng-if="vm.report.reportDescription">
+        <div class="col-sm-12">
+            <span class="h4" >{{vm.report.reportDescription}}</span>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div id="allFilters" ng-show="vm.getAllFilters().length > 0" translate>
+                <span class="h4" translate>Filters applied in this report:</span>
+                <ul>
+                    <li ng-repeat="filter in vm.getAllFilters()" style="padding-bottom: 5px; max-width: 800px;">
+                        {{filter.elementName}} {{filter.filterType}} 
+                        {{filter.criterion.date1}} {{filter.criterion.date2}}
+                        {{filter.criterion.text1}} {{filter.criterion.text2}}
+                        {{filter.criterion.textList.join()}}
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
     <div class="row">
         <div class="col-sm-12">
             <div id="promptsModal" ng-show="vm.getPrompts().length > 0" class="prompts-block" style="position: relative;">

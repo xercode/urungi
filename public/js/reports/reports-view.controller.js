@@ -14,7 +14,9 @@
         vm.exportAsPDFAvailable = false;
         vm.report = report;
         vm.prompts = {};
+        vm.allFilters = {};
         vm.getPrompts = getPrompts;
+        vm.getAllFilters = getAllFilters;
         vm.repaintWithPrompts = repaintWithPrompts;
         vm.saveAsXLSX = saveAsXLSX;
         vm.isAdmin = false;
@@ -43,6 +45,7 @@
             }
 
             vm.prompts = initPrompts();
+            vm.allFilters = initAllFilters();
             refresh();
         }
 
@@ -74,6 +77,26 @@
 
         function getPrompts () {
             return Object.values(vm.prompts);
+        }
+
+        function initAllFilters () {
+            const all = {};
+            for (const filter of vm.report.properties.filters) {
+                const p = {};
+                for (const key in filter) {
+                    p[key] = filter[key];
+                }
+                all[p.id + p.filterType] = p;
+                if (filter.promptMandatory === true){
+                    vm.mandatoryPrompts = true;
+                }
+            }
+
+            return all;
+        }
+
+        function getAllFilters () {
+            return Object.values(vm.allFilters);
         }
 
         function repaintWithPrompts () {

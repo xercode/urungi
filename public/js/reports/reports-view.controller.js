@@ -64,7 +64,7 @@
                     for (const key in filter) {
                         p[key] = filter[key];
                     }
-                    p.criterion = {};
+                    //p.criterion = {}; Commented to keep the values of filters selected
                     prompts[p.id + p.filterType] = p;
                     if (filter.promptMandatory === true){
                         vm.mandatoryPrompts = true;

@@ -1,8 +1,9 @@
 <table class="table table-striped">
     <colgroup>
-        <col style="width: 40%;">
+        <col style="width: 25%;">
+        <col style="width: 20%;">
         <col style="width: 15%;">
-        <col style="width: 15%;">
+        <col style="width: 10%;">
         <col style="width: 15%;">
         <col ng-if="!vm.hideButtons" style="width: 15%;">
     </colgroup>
@@ -11,6 +12,10 @@
             <th>
                 <span translate>Name</span>
                 <app-table-column-sort on-sort="vm.onSort('reportName', $dir)" sort-dir="vm.sortDir['reportName']"></app-table-column-sort>
+            </th>
+            <th>
+                <span translate>Description</span>
+                <app-table-column-sort on-sort="vm.onSort('reportDescription', $dir)" sort-dir="vm.sortDir['reportDescription']"></app-table-column-sort>
             </th>
             <th>
                 <span translate>Layer</span>
@@ -31,6 +36,9 @@
                 <app-table-column-filter on-filter="vm.onFilter('reportName', $value)"></app-table-column-filter>
             </td>
             <td>
+                <app-table-column-filter on-filter="vm.onFilter('reportDescription', $value)"></app-table-column-filter>
+            </td>
+            <td>
                 <app-table-column-filter on-filter="vm.onFilter('layer.name', $value)"></app-table-column-filter>
             </td>
             <td>
@@ -49,6 +57,7 @@
                     <span ng-if="report.isShared" class="badge" translate>shared</span>
                 </div>
             </td>
+            <td>{{ report.reportDescription }}</td>
             <td>{{ report.layerName }}</td>
             <td>{{ report.author }}</td>
             <td>{{ report.createdOn | date }}</td>

@@ -56,7 +56,7 @@
 
         function refresh () {
             const params = {};
-            params.fields = ['reportName', 'isPublic', 'isShared', 'layerName', 'parentFolder', 'owner', 'author', 'createdOn'];
+            params.fields = ['reportName', 'reportDescription', 'isPublic', 'isShared', 'layerName', 'parentFolder', 'owner', 'author', 'createdOn'];
             params.filters = vm.filters;
             params.sort = Object.keys(vm.sortDir).find(k => vm.sortDir[k]);
             params.sortType = vm.sortDir[params.sort];

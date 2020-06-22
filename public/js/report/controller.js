@@ -5,6 +5,7 @@ angular.module('app').controller('reportCtrl', function ($scope, connection, $co
     $scope.reportNameModal = 'partials/report/modals/reportNameModal.html';
     $scope.dashListModal = 'partials/report/modals/dashboardListModal.html';
     $scope.filterPromptModal = 'partials/report/modals/filter-prompt-modal.html';
+    $scope.filterLogicModal = 'partials/report/modals/filter-logic-modal.html';
     $scope.tabs = { selected: 'elements' };
 
     $scope.selectedReport = null;
@@ -252,6 +253,11 @@ angular.module('app').controller('reportCtrl', function ($scope, connection, $co
     $scope.confirmFilterModal = function () {
         $('#filterPromptsModal').modal('hide');
         $scope.selectedFilter.filterPrompt = !$scope.selectedFilter.filterPrompt;
+    };
+
+    $scope.showLogicModal = function (filter) {
+        $scope.selectedFilter = filter;
+        $('#filterLogicModal').modal('show');
     };
 
     /*

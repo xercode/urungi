@@ -12,6 +12,7 @@
             onChange: '&',
             onRemove: '&',
             setPrompt: '&',
+            setLogic: '&',
         },
     });
 
@@ -30,6 +31,7 @@
         vm.getFilterValues = getFilterValues;
         vm.inputChanged = inputChanged;
         vm.makePrompt = makePrompt;
+        vm.makeLogic = makeLogic;
         vm.onDateListChange = onDateListChange;
         vm.promptChanged = promptChanged;
         vm.removeFilter = removeFilter;
@@ -144,6 +146,10 @@
 
         function makePrompt () {
             vm.setPrompt({ filter: vm.filter });
+        }
+
+        function makeLogic() {
+            vm.setLogic({ filter: vm.filter });
         }
 
         function pad (num, size) {

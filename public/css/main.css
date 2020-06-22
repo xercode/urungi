@@ -3282,3 +3282,7 @@ a.list-group-item:hover {
 .margin-bottom-10{
     margin-bottom: 10px;
 }
+
+.report-description h4{
+    width: 100%;
+}

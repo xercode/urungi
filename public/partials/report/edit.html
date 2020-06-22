@@ -22,9 +22,9 @@
         </div>
         
         <div class="explorer-subheader">
-            <div class="explorer-header-title">
-                <h3 ng-if="!selectedReport.reportDescription" app-editable-text="selectedReport.reportDescription"><span translate>Report description</span></h3>
-                <h3 ng-if="selectedReport.reportDescription"  app-editable-text="selectedReport.reportDescription">{{ selectedReport.reportDescription}}</h3>
+            <div class="explorer-header-title report-description">
+                <h4 ng-if="!selectedReport.reportDescription" app-editable-text="selectedReport.reportDescription"><span translate>Report description</span></h4>
+                <h4 ng-if="selectedReport.reportDescription"  app-editable-text="selectedReport.reportDescription">{{ selectedReport.reportDescription}}</h4>
             </div>
         </div>
         

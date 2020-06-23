@@ -5,6 +5,7 @@ module.exports = {
     url: undefined,
     ip: undefined,
     port: undefined,
+    proxiedurl: undefined,
 
     // Number of processes to spawn
     // Defaults to the number of logical CPU cores

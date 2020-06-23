@@ -45,7 +45,8 @@ module.exports = function (app, passport) {
                         if (user) {
                             req.logIn(user, function (err) {
                                 if (err) { return next(err); }
-                                res.redirect('/');
+                                const proxiedurl = config.get('proxiedurl');
+                                res.redirect(proxiedurl);
 
                                 if (global.logSuccessLogin) {
                                     Log.saveToLog(req, { text: 'User login: ' + user.userName + ' (' + user.email + ')', code: 102 });

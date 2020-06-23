@@ -269,6 +269,11 @@ angular.module('app').controller('reportCtrl', function ($scope, connection, $co
             limit: $scope.selectedRecordLimit.value
         };
 
+        /* Ocultamos el botón para escoger la lógica (AND/OR) en el primer filtro */
+        $timeout(function () {
+            $('.logic-button').first().hide();
+        }, 0);
+
         $scope.$broadcast('showLoadingMessage', gettextCatalog.getString('Fetching data ...'));
 
         return api.getReportData($scope.selectedReport, params).then(function (result) {

@@ -61,7 +61,7 @@ angular.module('app').directive('reportView', function ($q, $timeout, reportMode
                             let end = begin + numPerPage;
                             $scope.data = $scope.data.slice(begin, end);
                             $scope.$parent.vm.numberOfRows = numberOfRows;
-                            $scope.$parent.vm.pages = parseInt(numberOfRows/numPerPage);
+                            $scope.$parent.vm.pages = parseInt(numberOfRows/numPerPage) + 1;
 
                         }
 

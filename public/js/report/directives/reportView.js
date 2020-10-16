@@ -38,7 +38,6 @@ angular.module('app').directive('reportView', function ($q, $timeout, reportMode
                 }
 
                 let promise = $q.resolve(0);
-
                 if (args.fetchData && $scope.report) {
                     $scope.loadingMessage = gettextCatalog.getString('Fetching data ...');
                     promise = api.getReportData($scope.report, args).then(function (result) {
@@ -50,7 +49,6 @@ angular.module('app').directive('reportView', function ($q, $timeout, reportMode
 
                 return promise.then(function () {
                     $scope.loadingMessage = gettextCatalog.getString('Repainting report ...');
-                    console.log('Repainting report ...', $scope);
                     if ($scope.data && $scope.data.length > 0) {
                         if( 'preview' == $scope.mode && 'grid' == $scope.report.reportType || 'vertical-grid' == $scope.report.reportType) {
                             $scope.$parent.vm.showPagination = true;
@@ -62,7 +60,6 @@ angular.module('app').directive('reportView', function ($q, $timeout, reportMode
                             $scope.data = $scope.data.slice(begin, end);
                             $scope.$parent.vm.numberOfRows = numberOfRows;
                             $scope.$parent.vm.pages = parseInt(numberOfRows/numPerPage) + 1;
-
                         }
 
 

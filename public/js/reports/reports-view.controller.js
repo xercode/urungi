@@ -51,11 +51,61 @@
 
         function refresh () {
             $timeout(function () {
+                var filled = isFilled(vm);
+                if (filled === true) {
+                    vm.mandatoryPrompts = false;
+                }
                 $scope.$broadcast('repaint', { fetchData: (vm.mandatoryPrompts)?false:true });
                 $('.filter-run').hide();
                 $('.filter-run').last().show();
             }, 0);
         }
+
+
+        function isFilled (vm){
+            var filledGlobal = 0;
+            var filters = 0;
+            for (const filter of vm.report.properties.filters) {
+
+                if (filter.promptMandatory === true){
+
+                    var filled = false;
+
+                    if (typeof filter.criterion.textList !== 'undefined' && filter.criterion.textList.length > 0) {
+                        filled = true;
+                    }
+
+                    if (typeof filter.criterion.text1 !== 'undefined' && filter.criterion.text1 != '') {
+                        filled = true;
+                    }
+
+                    if (typeof filter.criterion.text2 !== 'undefined' && filter.criterion.text2 != '') {
+                        filled = true;
+                    }
+
+                    if (typeof filter.criterion.date1 !== 'undefined' && filter.criterion.date1 != '') {
+                        filled = true;
+                    }
+
+                    if (typeof filter.criterion.date2 !== 'undefined' && filter.criterion.date2 != '') {
+                        filled = true;
+                    }
+
+                    if (filled === true) {
+                        filledGlobal++;
+                    }
+                    filters++;
+                }
+            }
+
+            if (filledGlobal == filters) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+
         function initPrompts () {
             const prompts = {};
             for (const filter of vm.report.properties.filters) {
@@ -67,7 +117,34 @@
                     //p.criterion = {}; Commented to keep the values of filters selected
                     prompts[p.id + p.filterType] = p;
                     if (filter.promptMandatory === true){
-                        vm.mandatoryPrompts = true;
+
+                        var filled;
+
+                        if (typeof filter.criterion.textList !== 'undefined' && filter.criterion.textList.length > 0) {
+                            filled = true;
+                        }
+
+                        if (typeof filter.criterion.text1 !== 'undefined' && filter.criterion.text1 != '') {
+                            filled = true;
+                        }
+
+                        if (typeof filter.criterion.text2 !== 'undefined' && filter.criterion.text2 != '') {
+                            filled = true;
+                        }
+
+                        if (typeof filter.criterion.date1 !== 'undefined' && filter.criterion.date1 != '') {
+                            filled = true;
+                        }
+
+                        if (typeof filter.criterion.date2 !== 'undefined' && filter.criterion.date2 != '') {
+                            filled = true;
+                        }
+
+                        if (filled === true) {
+                            vm.mandatoryPrompts = false;
+                        } else {
+                            vm.mandatoryPrompts = true;
+                        }
                     }
                 }
             }
